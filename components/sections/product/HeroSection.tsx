@@ -20,7 +20,7 @@ export default function HeroSection({ product }: HeroSectionProps) {
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:py-16">
         {/* Left: gallery + info */}
         <div className="lg:pr-4">
-          <ProductGallery productName={product.name} size={product.variants[0].label} />
+          <ProductGallery images={product.images} />
 
           <div className="mt-8">
             <div className="flex items-center gap-2">
@@ -41,7 +41,17 @@ export default function HeroSection({ product }: HeroSectionProps) {
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
               {product.name}
             </h1>
+            {product.nameUrdu ? (
+              <p dir="rtl" lang="ur" className="font-urdu mt-1 text-2xl leading-relaxed text-ink">
+                {product.nameUrdu}
+              </p>
+            ) : null}
             <p className="mt-2 text-lg text-brand-dark">{product.tagline}</p>
+            {product.taglineUrdu ? (
+              <p dir="rtl" lang="ur" className="font-urdu mt-1 text-lg leading-loose text-brand-dark">
+                {product.taglineUrdu}
+              </p>
+            ) : null}
 
             <p className="mt-4 max-w-prose text-body">{product.description}</p>
 

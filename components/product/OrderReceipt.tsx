@@ -25,9 +25,9 @@ export interface ReceiptOrder {
 
 interface OrderReceiptProps {
   order: ReceiptOrder;
-  /** Pre-filled wa.me link used by the "Chat on WhatsApp" button. */
+  /** Pre-filled wa.me link used by the WhatsApp button. */
   whatsappUrl: string;
-  /** Background delivery state: null = still sending. */
+  /** Background delivery state: null = still saving. */
   delivery: DeliveryResult | null;
   /** Reset back to the order form to place another order. */
   onReset: () => void;
@@ -39,12 +39,15 @@ const money = (n: number) => `${site.currency} ${n.toLocaleString()}`;
 function deliveryCopy(delivery: DeliveryResult | null): { text: string; tone: "pending" | "ok" | "warn" } {
   switch (delivery) {
     case "sent":
-      return { text: "Your order has been received. We'll confirm it shortly — pay cash on delivery.", tone: "ok" };
+      return {
+        text: "Your order is confirmed. Our team will arrange delivery and you simply pay cash when it arrives — nothing else to do.",
+        tone: "ok",
+      };
     case null:
-      return { text: "Sending your order to our team…", tone: "pending" };
+      return { text: "Placing your order…", tone: "pending" };
     default: // "failed" | "unconfigured"
       return {
-        text: "Almost done! Please tap “Chat on WhatsApp” below to send us your order and confirm it.",
+        text: "We couldn't save your order automatically. Please tap below to send it to us on WhatsApp so we can process it.",
         tone: "warn",
       };
   }
@@ -52,22 +55,32 @@ function deliveryCopy(delivery: DeliveryResult | null): { text: string; tone: "p
 
 /**
  * Order confirmation receipt shown after the customer places an order.
- * Displays an order number, itemized total, and the customer's details,
- * plus a "Chat on WhatsApp" button carrying the same pre-filled order.
+ * The order is already saved server-side — the WhatsApp button here is
+ * OPTIONAL (for questions / more details), not required to confirm.
  */
 export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: OrderReceiptProps) {
   const status = deliveryCopy(delivery);
+  // Only when auto-save failed does the customer NEED WhatsApp to send the order.
+  const needsWhatsApp = delivery === "failed" || delivery === "unconfigured";
 
   return (
-    <div className="rounded-3xl border border-line bg-paper p-5 shadow-sm sm:p-8">
-      {/* Success header */}
+    <div className="animate-pop rounded-3xl border border-line bg-paper p-5 shadow-sm sm:p-8">
+      {/* Success header with animated check */}
       <div className="flex flex-col items-center text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-mint text-brand">
-          <IconCheck size={30} />
+        <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-mint text-brand">
+          <span
+            className="animate-ring absolute inset-0 rounded-full bg-brand-light"
+            aria-hidden="true"
+          />
+          <span className="animate-check relative">
+            <IconCheck size={32} />
+          </span>
         </span>
-        <h3 className="mt-4 text-xl font-bold text-ink">Order placed successfully</h3>
+        <h3 className="animate-fade-up mt-4 text-xl font-bold text-ink">
+          Order placed successfully
+        </h3>
         <p
-          className={`mt-1 text-sm ${
+          className={`animate-fade-up mt-1 text-sm ${
             status.tone === "warn" ? "text-sale" : status.tone === "pending" ? "text-muted" : "text-body"
           }`}
         >
@@ -133,21 +146,41 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
         </ul>
       </div>
 
-      {/* Confirm on WhatsApp */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-brand-dark sm:text-base"
-      >
-        <IconWhatsApp size={22} />
-        Chat on WhatsApp to confirm
-      </a>
+      {/* WhatsApp */}
+      {needsWhatsApp ? (
+        // Auto-save failed → WhatsApp is the way to actually send the order.
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-brand-dark sm:text-base"
+        >
+          <IconWhatsApp size={22} />
+          Send my order on WhatsApp
+        </a>
+      ) : (
+        // Order is already placed → WhatsApp is OPTIONAL, just for questions.
+        <div className="mt-6 rounded-2xl border border-line bg-cloud p-4 text-center">
+          <p className="text-sm text-body">
+            If you’d like, you can chat with us on WhatsApp for any questions or
+            more details — your order is already placed, so this is optional.
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand bg-paper px-5 py-2.5 text-sm font-bold text-brand transition-colors hover:bg-brand hover:text-white"
+          >
+            <IconWhatsApp size={20} />
+            Chat on WhatsApp
+          </a>
+        </div>
+      )}
 
       <button
         type="button"
         onClick={onReset}
-        className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-full border border-line px-5 py-3 text-sm font-semibold text-body transition-colors hover:border-brand hover:text-brand"
+        className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-full px-5 py-3 text-sm font-semibold text-body transition-colors hover:text-brand"
       >
         Place another order
         <IconArrowRight size={16} />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Noto_Nastaliq_Urdu } from "next/font/google";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,6 +11,14 @@ import "./globals.css";
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Urdu (Nastaliq) script font, used for the Urdu name/tagline.
+const notoUrdu = Noto_Nastaliq_Urdu({
+  variable: "--font-noto-urdu",
+  subsets: ["arabic"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
@@ -43,7 +51,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jakarta.variable} h-full`}>
+    <html lang="en" className={`${jakarta.variable} ${notoUrdu.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-paper text-body">
         <Navbar />
         <main className="flex-1">{children}</main>

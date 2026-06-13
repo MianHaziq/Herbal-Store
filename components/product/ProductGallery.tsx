@@ -1,60 +1,58 @@
-"use client"; // needs useState to track the active gallery view
+"use client"; // needs useState to track the active gallery image
 
 import { useState } from "react";
+import Image from "next/image";
 
-import BottleImage from "@/components/product/BottleImage";
+import type { ProductImage } from "@/lib/types";
 
 interface ProductGalleryProps {
-  productName: string;
-  /** Selected size label, shown on the bottle. */
-  size?: string;
+  images: ProductImage[];
 }
 
-/** Different framings of the product, mimicking a multi-image gallery. */
-const VIEWS = [
-  { id: "front", caption: "Front", bg: "product-glow" },
-  { id: "ingredients", caption: "100% Natural", bg: "bg-mint" },
-  { id: "dropper", caption: "Easy dropper", bg: "bg-cloud" },
-] as const;
-
-export default function ProductGallery({ productName, size }: ProductGalleryProps) {
+/** Product photo gallery: a main image with a clickable thumbnail strip. */
+export default function ProductGallery({ images }: ProductGalleryProps) {
   const [active, setActive] = useState(0);
+  const main = images[active] ?? images[0];
 
   return (
     <div className="flex flex-col gap-4">
       {/* Main image */}
-      <div className="relative overflow-hidden rounded-3xl border border-line bg-paper">
-        <div className={`absolute inset-0 ${VIEWS[active].bg}`} aria-hidden="true" />
-        <div className="relative flex items-center justify-center px-8 py-10">
-          <BottleImage
-            productName={productName}
-            size={size}
-            className="h-72 w-auto drop-shadow-xl transition-transform duration-500 sm:h-96"
-          />
-        </div>
-        <span className="absolute left-4 top-4 rounded-full bg-paper/80 px-3 py-1 text-xs font-semibold text-brand backdrop-blur">
-          {VIEWS[active].caption}
-        </span>
+      <div className="relative aspect-square overflow-hidden rounded-3xl border border-line bg-cloud">
+        <Image
+          src={main.src}
+          alt={main.alt}
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-cover"
+        />
       </div>
 
-      {/* Thumbnails */}
-      <div className="grid grid-cols-3 gap-3">
-        {VIEWS.map((view, i) => (
-          <button
-            key={view.id}
-            type="button"
-            onClick={() => setActive(i)}
-            aria-label={`View: ${view.caption}`}
-            aria-pressed={active === i}
-            className={`relative flex items-center justify-center overflow-hidden rounded-2xl border-2 py-4 transition-colors ${
-              active === i ? "border-brand" : "border-line hover:border-brand-light"
-            }`}
-          >
-            <div className={`absolute inset-0 ${view.bg}`} aria-hidden="true" />
-            <BottleImage productName={productName} size={size} className="relative h-16 w-auto" />
-          </button>
-        ))}
-      </div>
+      {/* Thumbnails (only if more than one image) */}
+      {images.length > 1 ? (
+        <div className="grid grid-cols-4 gap-3">
+          {images.map((img, i) => (
+            <button
+              key={img.src}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`View image ${i + 1}`}
+              aria-pressed={active === i}
+              className={`relative aspect-square overflow-hidden rounded-2xl border-2 transition-colors ${
+                active === i ? "border-brand" : "border-line hover:border-brand-light"
+              }`}
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="120px"
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

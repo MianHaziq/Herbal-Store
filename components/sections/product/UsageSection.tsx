@@ -1,4 +1,5 @@
-import BottleImage from "@/components/product/BottleImage";
+import Image from "next/image";
+
 import { IconLeaf } from "@/components/icons";
 import type { Product } from "@/lib/types";
 
@@ -37,14 +38,14 @@ export default function UsageSection({ product }: UsageSectionProps) {
 
         {/* Ingredients card */}
         <div className="rounded-3xl border border-line bg-cloud p-8">
-          <div className="flex items-center justify-center">
-            <div className="product-glow rounded-3xl px-6 py-4">
-              <BottleImage
-                productName={product.name}
-                size={product.variants[0].label}
-                className="h-56 w-auto drop-shadow-lg"
-              />
-            </div>
+          <div className="relative mx-auto aspect-square max-w-sm overflow-hidden rounded-2xl">
+            <Image
+              src={(product.images[1] ?? product.images[0]).src}
+              alt={(product.images[1] ?? product.images[0]).alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 400px"
+              className="object-cover"
+            />
           </div>
           <h3 className="mt-6 text-center text-lg font-bold text-ink">
             What&apos;s inside

@@ -1,11 +1,14 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────
- *  PRODUCT DATA — single source of truth.
+ *  PRODUCT DATA — the ONE file to edit.
  *
- *  To change the product, edit the object below.
- *  To add more products later, add another entry to the `products` array;
- *  each needs a unique `slug`. Use getProduct(slug) / getDefaultProduct()
- *  to read them in pages and components.
+ *  • TEXT:   change the name, prices, description, benefits, FAQs, etc. below.
+ *  • IMAGES: either (a) replace the files in /public/products/ keeping the same
+ *            names, OR (b) change the `src` paths in the `images` array below.
+ *            `src` can be a /public path ("/products/main.jpg") or a full URL.
+ *
+ *  To add another product later: add a new object to the `products` array with
+ *  a unique `slug`, then read it with getProduct(slug).
  * ─────────────────────────────────────────────────────────────────────────
  */
 import {
@@ -18,112 +21,120 @@ import type { Product } from "@/lib/types";
 
 export const products: Product[] = [
   {
-    slug: "herbal-relief-oil",
-    name: "Herbal Relief Oil",
-    tagline: "Fast, soothing relief — 100% natural, no side effects",
+    slug: "sugar-care-herbal-capsules",
+    name: "Sugar Care Herbal Capsules",
+    nameUrdu: "شوگر کیئر ہربل کیپسول",
+    tagline: "Natural blood-sugar support — 100% herbal, no side effects",
+    taglineUrdu: "قدرتی شوگر کنٹرول — مکمل ہربل فارمولا",
     description:
-      "A dermatologist-reviewed blend of cold-pressed botanical oils crafted to calm itching, irritation, and dryness. Lightweight and fast-absorbing, it nourishes the skin without leaving a greasy residue — safe for daily use on sensitive skin.",
+      "A traditional Unani-inspired herbal blend in easy-to-take capsules, made to support healthy blood-sugar levels as part of a balanced lifestyle. Formulated from time-tested botanicals like Karela (bitter gourd), Jamun, Gurmar and Methi — with no steroids, no added sugar, and no artificial chemicals.",
+    // Edit image paths here, or just replace the files in /public/products/.
+    images: [
+      { src: "/products/product-main.jpg", alt: "Sugar Care herbal capsules bottle" },
+      { src: "/products/product-2.jpg", alt: "Sugar Care herbal capsules in blister packs" },
+      { src: "/products/product-3.jpg", alt: "Natural herbal capsules close-up" },
+    ],
     // First variant is selected by default.
     variants: [
-      { id: "100ml", label: "100 ML", price: 1990, compareAtPrice: 2450 },
+      { id: "60caps", label: "60 Capsules", price: 1990, compareAtPrice: 2450 },
       {
-        id: "200ml",
-        label: "200 ML",
+        id: "120caps",
+        label: "120 Capsules",
         price: 3490,
         compareAtPrice: 4900,
         badge: "Best value",
       },
     ],
     rating: 4.8,
-    reviewCount: 1284,
+    reviewCount: 1463,
     highlights: [
-      "100% natural ingredients",
-      "No steroids or harsh chemicals",
-      "Visible results in 7 days",
+      "100% natural herbal formula",
+      "No steroids or added sugar",
+      "Supports healthy sugar levels",
       "Cash on delivery available",
     ],
     benefits: [
       {
         icon: <IconLeaf className="text-brand" />,
-        title: "100% Natural",
+        title: "100% Herbal",
         description:
-          "Plant-based oils and extracts — free from steroids, parabens, and artificial fragrance.",
+          "A plant-based blend of Karela, Jamun, Gurmar and Methi — free from steroids, added sugar, and artificial chemicals.",
       },
       {
         icon: <IconDroplet className="text-brand" />,
-        title: "Deeply Soothing",
+        title: "Supports Sugar Balance",
         description:
-          "Calms itching and irritation on contact while restoring the skin's moisture barrier.",
+          "Traditional botanicals chosen to help support healthy blood-sugar levels alongside a balanced diet.",
       },
       {
         icon: <IconShieldCheck className="text-brand" />,
-        title: "No Side Effects",
+        title: "Gentle & Safe",
         description:
-          "Gentle, non-irritating formula safe for sensitive skin and daily long-term use.",
+          "Non-habit-forming capsules suitable for daily, long-term use as part of your routine.",
       },
       {
         icon: <IconSparkles className="text-brand" />,
-        title: "Visible Results",
+        title: "Easy to Take",
         description:
-          "Most customers notice a clear difference within the first week of regular use.",
+          "Convenient capsules — no bitter taste, no measuring. Just take with water after meals.",
       },
     ],
     usage: [
-      "Clean and gently dry the affected area.",
-      "Apply 3–4 drops of oil and massage in slow circular motions.",
-      "Use twice daily — morning and before bed — for best results.",
-      "Continue for at least 2 weeks for lasting relief.",
+      "Take 1 capsule twice daily, after breakfast and after dinner.",
+      "Swallow with a glass of water — do not chew.",
+      "Use consistently every day for best results.",
+      "Pair with a balanced diet and light exercise; monitor your sugar levels regularly.",
     ],
     ingredients: [
-      "Cold-pressed Neem oil",
-      "Tea tree extract",
-      "Aloe vera",
-      "Vitamin E",
-      "Coconut carrier oil",
+      "Karela (Bitter Gourd)",
+      "Jamun (Java Plum) seed",
+      "Gurmar (Gymnema)",
+      "Methi (Fenugreek)",
+      "Neem",
     ],
     faqs: [
       {
-        question: "Is it safe for sensitive skin?",
+        question: "Is it safe to take daily?",
         answer:
-          "Yes. The formula is free from steroids, parabens, and synthetic fragrance, and is gentle enough for daily use on sensitive skin. For very young children or open wounds, consult a doctor first.",
+          "Yes. It is a non-habit-forming herbal supplement made for daily use. If you are pregnant, nursing, or already on prescribed diabetes medication, please consult your doctor before use so your dosage can be monitored.",
+      },
+      {
+        question: "Can I take it with my current medicine?",
+        answer:
+          "Many people use it alongside their routine, but because it may support lower sugar levels, we recommend checking with your doctor first so they can adjust your medication and monitor you.",
       },
       {
         question: "How soon will I see results?",
         answer:
-          "Most customers feel soothing relief from the first application, with visible improvement within 7 days of twice-daily use.",
+          "Herbal formulas work gradually. Most customers use it consistently for 4–8 weeks, along with a balanced diet, to notice a difference. Keep tracking your sugar readings.",
       },
       {
         question: "Do you offer cash on delivery?",
         answer:
-          "Yes. You can pay cash when your order arrives. Just place your order and our team will confirm the details with you on WhatsApp.",
-      },
-      {
-        question: "How is the order delivered?",
-        answer:
-          "After you submit the form, your order is sent to us on WhatsApp. We confirm your address and dispatch within 24–48 hours, with delivery typically in 2–4 business days.",
+          "Yes. You can pay cash when your order arrives. Just place your order and our team will confirm the details with you.",
       },
     ],
     testimonials: [
       {
-        name: "Ayesha K.",
+        name: "Imran S.",
         location: "Lahore",
         rating: 5,
         quote:
-          "The itching that bothered me for months calmed down in just a few days. It doesn't feel greasy at all.",
+          "I've been taking it daily for two months along with a better diet. My readings are more stable and the capsules are easy to take.",
       },
       {
-        name: "Bilal R.",
-        location: "Karachi",
+        name: "Naseem A.",
+        location: "Faisalabad",
         rating: 5,
         quote:
-          "Ordering on WhatsApp was so easy and delivery was quick. The oil genuinely works for my dry, irritated skin.",
+          "No bitter taste like the raw karela juice I used before. Delivery was quick and cash on delivery made it easy.",
       },
       {
-        name: "Sana M.",
+        name: "Rabia K.",
         location: "Islamabad",
         rating: 4,
         quote:
-          "Natural smell, gentle on my sensitive skin, and real results. Will be ordering the bigger bottle next.",
+          "Natural ingredients I recognise, and it sits well with my routine. Ordering was simple and the team confirmed my order fast.",
       },
     ],
   },
