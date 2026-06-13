@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Design tokens — clean medical palette ───────────────────────── */
+@theme {
+  /* Brand: calm medical teal/emerald = trust + health */
+  --color-brand: #0d9488;
+  --color-brand-dark: #0f766e;
+  --color-brand-light: #5eead4;
+
+  /* Surfaces */
+  --color-mint: #f0fdfa; /* soft tinted section background */
+  --color-paper: #ffffff; /* cards / page */
+  --color-cloud: #f8fafc; /* alternating section background */
+
+  /* Text — slate scale */
+  --color-ink: #0f172a; /* headings */
+  --color-body: #475569; /* paragraphs */
+  --color-muted: #94a3b8; /* secondary / captions */
+  --color-line: #e2e8f0; /* borders / dividers */
+
+  /* Accents */
+  --color-amber: #f59e0b; /* star ratings */
+  --color-sale: #e11d48; /* discount / sale price */
+
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-jakarta);
+
+  /* Motion */
+  --animate-fade-up: fade-up 0.6s ease-out both;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* ── Base ────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  /* Guard against any accidental horizontal scroll on small screens */
+  overflow-x: hidden;
+}
+
+/* ── Utilities ───────────────────────────────────────────────────── */
+/* Soft radial glow used behind the product image */
+.product-glow {
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(94, 234, 212, 0.35) 0%,
+    rgba(240, 253, 250, 0) 70%
+  );
+}
+
+/* Subtle dotted texture for hero backgrounds */
+.dotted {
+  background-image: radial-gradient(var(--color-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
