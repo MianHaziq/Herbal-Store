@@ -1,6 +1,6 @@
 import ProductGallery from "@/components/product/ProductGallery";
 import OrderForm from "@/components/product/OrderForm";
-import { IconStar, IconCheck, IconShieldCheck, IconTruck, IconLeaf } from "@/components/icons";
+import { IconStar, IconCheck, IconShieldCheck, IconTruck, IconLeaf, IconBag } from "@/components/icons";
 import type { Product } from "@/lib/types";
 
 interface HeroSectionProps {
@@ -53,7 +53,17 @@ export default function HeroSection({ product }: HeroSectionProps) {
               </p>
             ) : null}
 
-            <p className="mt-4 max-w-prose text-body">{product.description}</p>
+            {/* Mobile-only quick CTA — jumps to the order form below. Hidden on
+                desktop, where the order form sits in the right column. */}
+            <a
+              href="#order"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-brand-dark lg:hidden"
+            >
+              <IconBag size={20} />
+              Order Now
+            </a>
+
+            <p className="mt-5 max-w-prose text-body lg:mt-4">{product.description}</p>
 
             <ul className="mt-5 grid gap-2 sm:grid-cols-2">
               {product.highlights.map((h) => (
