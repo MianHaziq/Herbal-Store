@@ -5,6 +5,7 @@ import TrustSection from "@/components/sections/product/TrustSection";
 import FaqSection from "@/components/sections/product/FaqSection";
 import FinalCtaSection from "@/components/sections/product/FinalCtaSection";
 import StickyOrderBar from "@/components/product/StickyOrderBar";
+import StickyWhatsApp from "@/components/product/StickyWhatsApp";
 import { getDefaultProduct } from "@/data/products";
 import { site } from "@/lib/site";
 
@@ -48,6 +49,7 @@ export default function HomePage() {
       <FaqSection product={product} />
       <FinalCtaSection product={product} />
       <StickyOrderBar product={product} />
+      <StickyWhatsApp productName={product.name} />
     </>
   );
 }

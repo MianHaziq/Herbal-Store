@@ -1,7 +1,6 @@
 import { site } from "@/lib/site";
 import type { DeliveryResult } from "@/lib/orderSubmission";
 import {
-  IconCheck,
   IconWhatsApp,
   IconUser,
   IconPhone,
@@ -65,37 +64,62 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
 
   return (
     <div className="animate-pop rounded-3xl border border-line bg-paper p-5 shadow-sm sm:p-8">
-      {/* Success header with animated check */}
+      {/* Success header with an animated, drawn-on checkmark */}
       <div className="flex flex-col items-center text-center">
-        <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-mint text-brand">
+        <span className="animate-check relative flex h-20 w-20 items-center justify-center">
+          <span className="absolute inset-0 rounded-full bg-mint" aria-hidden="true" />
           <span
-            className="animate-ring absolute inset-0 rounded-full bg-brand-light"
+            className="animate-ring absolute inset-2 rounded-full bg-brand-light"
             aria-hidden="true"
           />
-          <span className="animate-check relative">
-            <IconCheck size={32} />
-          </span>
+          <svg viewBox="0 0 56 56" className="relative h-12 w-12 text-brand" aria-hidden="true">
+            <circle
+              className="success-ring"
+              cx="28"
+              cy="28"
+              r="25"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            />
+            <path
+              className="success-tick"
+              d="M17 29l7 7 15-16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </span>
-        <h3 className="animate-fade-up mt-4 text-xl font-bold text-ink">
+        <h3
+          className="animate-fade-up mt-4 text-xl font-bold text-ink"
+          style={{ animationDelay: "0.15s" }}
+        >
           Order placed successfully
         </h3>
         <p
           className={`animate-fade-up mt-1 text-sm ${
             status.tone === "warn" ? "text-sale" : status.tone === "pending" ? "text-muted" : "text-body"
           }`}
+          style={{ animationDelay: "0.25s" }}
         >
           {status.text}
         </p>
       </div>
 
       {/* Order meta */}
-      <div className="mt-6 flex items-center justify-between rounded-2xl bg-cloud px-4 py-3 text-sm">
+      <div
+        className="animate-fade-up mt-6 flex items-center justify-between rounded-2xl bg-cloud px-4 py-3 text-sm"
+        style={{ animationDelay: "0.32s" }}
+      >
         <span className="font-semibold text-ink">Order #{order.id}</span>
         <span className="text-muted">{order.date}</span>
       </div>
 
       {/* Itemized */}
-      <div className="mt-5">
+      <div className="animate-fade-up mt-5" style={{ animationDelay: "0.4s" }}>
         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted">
           Order summary
         </h4>
@@ -126,7 +150,7 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
       </div>
 
       {/* Customer details */}
-      <div className="mt-5">
+      <div className="animate-fade-up mt-5" style={{ animationDelay: "0.48s" }}>
         <h4 className="text-xs font-semibold uppercase tracking-wide text-muted">
           Delivery details
         </h4>
@@ -153,14 +177,18 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-brand-dark sm:text-base"
+          style={{ animationDelay: "0.56s" }}
+          className="animate-fade-up mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-brand-dark sm:text-base"
         >
           <IconWhatsApp size={22} />
           Send my order on WhatsApp
         </a>
       ) : (
         // Order is already placed → WhatsApp is OPTIONAL, just for questions.
-        <div className="mt-6 rounded-2xl border border-line bg-cloud p-4 text-center">
+        <div
+          className="animate-fade-up mt-6 rounded-2xl border border-line bg-cloud p-4 text-center"
+          style={{ animationDelay: "0.56s" }}
+        >
           <p className="text-sm text-body">
             If you’d like, you can chat with us on WhatsApp for any questions or
             more details — your order is already placed, so this is optional.

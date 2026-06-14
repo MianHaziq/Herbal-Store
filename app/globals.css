@@ -21,6 +21,7 @@
   /* Accents */
   --color-amber: #f59e0b; /* star ratings */
   --color-sale: #e11d48; /* discount / sale price */
+  --color-whatsapp: #25d366; /* WhatsApp brand green */
 
   --font-sans: var(--font-jakarta);
   --font-display: var(--font-jakarta);
@@ -83,6 +84,23 @@
   }
 }
 
+/* SaaS-style "draw" animation for the success checkmark (stroke reveal) */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.success-ring {
+  stroke-dasharray: 157;
+  stroke-dashoffset: 157;
+  animation: draw 0.6s ease-out forwards;
+}
+.success-tick {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 0.4s 0.45s ease-out forwards;
+}
+
 /* ── Base ────────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
@@ -131,6 +149,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
   }
 }

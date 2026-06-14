@@ -1,4 +1,4 @@
-"use client"; // needs useState/useRef for swipe + active-image tracking
+"use client"; // controlled swipe slider needs state + pointer handlers
 
 import { useRef, useState } from "react";
 import Image from "next/image";
@@ -10,44 +10,77 @@ interface ProductGalleryProps {
 }
 
 /**
- * Product photo gallery.
- * - Main image is a horizontal scroll-snap track → swipe by hand on mobile,
- *   trackpad/drag on desktop. Dots show the active image on mobile.
- * - Thumbnails scroll the track to the chosen image.
+ * Product gallery with a CONTROLLED swipe slider — one image per swipe.
+ * A horizontal drag past a small threshold advances exactly ±1 image (so
+ * three images go 1 → 2 → 3, never skipping to the end). Thumbnails and dots
+ * also control it. Vertical drags are ignored so the page can still scroll.
  */
 export default function ProductGallery({ images }: ProductGalleryProps) {
+  const last = images.length - 1;
   const [active, setActive] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
 
-  // Update the active index as the user swipes/scrolls.
-  function handleScroll() {
-    const el = trackRef.current;
-    if (!el) return;
-    const i = Math.round(el.scrollLeft / el.clientWidth);
-    if (i !== active) setActive(i);
+  const startX = useRef(0);
+  const startY = useRef(0);
+  const widthRef = useRef(1);
+  const axis = useRef<null | "x" | "y">(null);
+
+  function onPointerDown(e: React.PointerEvent) {
+    startX.current = e.clientX;
+    startY.current = e.clientY;
+    widthRef.current = e.currentTarget.clientWidth || 1;
+    axis.current = null;
+    setDragging(true);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
   }
 
-  // Jump to an image when a thumbnail is tapped.
-  function goTo(i: number) {
-    const el = trackRef.current;
-    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
-    setActive(i);
+  function onPointerMove(e: React.PointerEvent) {
+    if (!dragging) return;
+    const dx = e.clientX - startX.current;
+    const dy = e.clientY - startY.current;
+
+    // Decide gesture direction once, after a small movement.
+    if (axis.current === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+      axis.current = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    }
+    if (axis.current !== "x") return; // vertical → let the page scroll
+
+    // Add resistance when dragging past the first/last image.
+    let offset = dx;
+    if ((active === 0 && dx > 0) || (active === last && dx < 0)) offset = dx * 0.3;
+    setDragX(offset);
+  }
+
+  function endDrag() {
+    if (!dragging) return;
+    setDragging(false);
+    const threshold = Math.min(60, widthRef.current * 0.18);
+    let next = active;
+    if (dragX <= -threshold) next = Math.min(last, active + 1);
+    else if (dragX >= threshold) next = Math.max(0, active - 1);
+    setActive(next);
+    setDragX(0);
+    axis.current = null;
   }
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Swipeable main image */}
-      <div className="relative">
+      {/* Swipeable viewport */}
+      <div className="relative overflow-hidden rounded-3xl border border-line bg-cloud">
         <div
-          ref={trackRef}
-          onScroll={handleScroll}
-          className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-3xl border border-line bg-cloud"
+          className="flex touch-pan-y"
+          style={{
+            transform: `translateX(calc(${-active * 100}% + ${dragX}px))`,
+            transition: dragging ? "none" : "transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1)",
+          }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
         >
           {images.map((img, i) => (
-            <div
-              key={img.src}
-              className="relative aspect-square w-full shrink-0 snap-center"
-            >
+            <div key={img.src} className="relative aspect-square w-full shrink-0">
               <Image
                 src={img.src}
                 alt={img.alt}
@@ -55,13 +88,13 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 priority={i === 0}
                 draggable={false}
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover select-none"
+                className="pointer-events-none select-none object-cover"
               />
             </div>
           ))}
         </div>
 
-        {/* Swipe dots (mobile only) */}
+        {/* Dots (mobile) */}
         {images.length > 1 ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center gap-1.5 sm:hidden">
             {images.map((img, i) => (
@@ -83,7 +116,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
             <button
               key={img.src}
               type="button"
-              onClick={() => goTo(i)}
+              onClick={() => setActive(i)}
               aria-label={`View image ${i + 1}`}
               aria-pressed={active === i}
               className={`relative aspect-square overflow-hidden rounded-2xl border-2 transition-colors ${

@@ -1,6 +1,6 @@
 "use client"; // needs useState for form fields, variant/quantity selection, and submit state
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { site } from "@/lib/site";
 import { buildWhatsAppOrderUrl } from "@/lib/whatsapp";
@@ -36,7 +36,16 @@ export default function OrderForm({ product }: OrderFormProps) {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const [order, setOrder] = useState<PlacedOrder | null>(null);
+
+  // After the order is placed, bring the success receipt to the top of the
+  // screen (otherwise the user stays scrolled mid-form and misses it).
+  useEffect(() => {
+    if (status === "success") {
+      document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [status]);
 
   const variant = useMemo(
     () => product.variants.find((v) => v.id === variantId) ?? product.variants[0],
@@ -53,8 +62,15 @@ export default function OrderForm({ product }: OrderFormProps) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Simple front-end validation — no backend involved.
+    // Front-end validation — no backend involved.
     if (!name.trim() || !phone.trim() || !address.trim()) {
+      setErrorMsg("Please fill in your name, phone, and address to continue.");
+      setStatus("error");
+      return;
+    }
+    // Pakistani mobile number: 11 digits starting with 03 (e.g. 03001234567).
+    if (!/^03\d{9}$/.test(phone)) {
+      setErrorMsg("Enter a valid Pakistani mobile number, e.g. 0300 1234567 (11 digits).");
       setStatus("error");
       return;
     }
@@ -226,9 +242,12 @@ export default function OrderForm({ product }: OrderFormProps) {
           label="Phone number"
           icon={<IconPhone size={18} />}
           value={phone}
-          onChange={setPhone}
-          placeholder="e.g. 0300 1234567"
+          // Keep digits only and cap at 11 (Pakistani mobile: 03XXXXXXXXX).
+          onChange={(v) => setPhone(v.replace(/\D/g, "").slice(0, 11))}
+          placeholder="03XX XXXXXXX"
           type="tel"
+          inputMode="numeric"
+          maxLength={11}
           autoComplete="tel"
         />
         <Field
@@ -257,7 +276,7 @@ export default function OrderForm({ product }: OrderFormProps) {
 
       {status === "error" ? (
         <p role="alert" className="mt-4 text-sm font-medium text-sale">
-          Please fill in your name, phone, and address to continue.
+          {errorMsg}
         </p>
       ) : null}
 
@@ -291,9 +310,11 @@ interface FieldProps {
   type?: string;
   autoComplete?: string;
   textarea?: boolean;
+  inputMode?: "text" | "numeric" | "tel" | "email";
+  maxLength?: number;
 }
 
-function Field({ id, label, icon, value, onChange, placeholder, type = "text", autoComplete, textarea }: FieldProps) {
+function Field({ id, label, icon, value, onChange, placeholder, type = "text", autoComplete, textarea, inputMode, maxLength }: FieldProps) {
   const shared =
     "w-full rounded-2xl border border-line bg-paper py-3 pl-11 pr-4 text-sm text-ink placeholder:text-muted outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand-light/50";
   return (
@@ -322,6 +343,8 @@ function Field({ id, label, icon, value, onChange, placeholder, type = "text", a
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             autoComplete={autoComplete}
+            inputMode={inputMode}
+            maxLength={maxLength}
             className={shared}
             required
           />

@@ -33,3 +33,12 @@ export function buildWhatsAppOrderUrl(order: OrderDetails): string {
   const message = lines.join("\n");
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
+
+/**
+ * A general "chat with us" WhatsApp link with a friendly pre-filled message.
+ * Used by the floating sticky WhatsApp button (not tied to a placed order).
+ */
+export function buildWhatsAppInquiryUrl(productName: string): string {
+  const message = `Assalam o Alaikum! I'm interested in ${productName}. Could you please share more details?`;
+  return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
