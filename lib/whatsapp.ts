@@ -4,6 +4,7 @@ export interface OrderDetails {
   name: string;
   phone: string;
   address: string;
+  city: string;
   productName: string;
   variantLabel: string;
   quantity: number;
@@ -28,6 +29,7 @@ export function buildWhatsAppOrderUrl(order: OrderDetails): string {
     `*Name:* ${order.name}`,
     `*Phone:* ${order.phone}`,
     `*Address:* ${order.address}`,
+    `*City:* ${order.city}`,
   ];
 
   const message = lines.join("\n");

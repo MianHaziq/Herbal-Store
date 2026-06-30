@@ -9,6 +9,10 @@ interface ProductGalleryProps {
   images: ProductImage[];
 }
 
+// Tiny inline blur shown instantly while the real image decodes (no blank flash).
+const BLUR =
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+PHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPScjZWVmM2VmJy8+PC9zdmc+";
+
 /**
  * Product gallery with a CONTROLLED swipe slider — one image per swipe.
  * A horizontal drag past a small threshold advances exactly ±1 image (so
@@ -86,6 +90,11 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 alt={img.alt}
                 fill
                 priority={i === 0}
+                fetchPriority={i === 0 ? "high" : "auto"}
+                loading={i === 0 ? "eager" : "lazy"}
+                quality={90}
+                placeholder="blur"
+                blurDataURL={BLUR}
                 draggable={false}
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="pointer-events-none select-none object-cover"
@@ -123,7 +132,16 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 active === i ? "border-brand" : "border-line hover:border-brand-light"
               }`}
             >
-              <Image src={img.src} alt={img.alt} fill sizes="120px" className="object-cover" />
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                quality={85}
+                placeholder="blur"
+                blurDataURL={BLUR}
+                sizes="120px"
+                className="object-cover"
+              />
             </button>
           ))}
         </div>

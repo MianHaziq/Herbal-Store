@@ -14,13 +14,13 @@ export default function FaqSection({ product }: FaqSectionProps) {
 
   return (
     <section id="faq" className="scroll-mt-24 border-t border-line">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:py-20">
+      <div dir="rtl" lang="ur" className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:py-20">
         <div className="text-center">
-          <span className="text-sm font-semibold uppercase tracking-wide text-brand">
-            Questions
+          <span className="font-urdu text-base font-semibold text-brand">
+            سوالات
           </span>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-            Frequently asked
+          <h2 className="font-urdu mt-3 text-3xl font-bold text-ink sm:text-4xl">
+            اکثر پوچھے گئے سوالات
           </h2>
         </div>
 
@@ -35,7 +35,7 @@ export default function FaqSection({ product }: FaqSectionProps) {
                   aria-expanded={expanded}
                   className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                 >
-                  <span className="font-semibold text-ink">{faq.question}</span>
+                  <span className="font-urdu font-semibold text-ink">{faq.question}</span>
                   <IconChevronDown
                     size={20}
                     className={`shrink-0 text-brand transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
@@ -47,7 +47,7 @@ export default function FaqSection({ product }: FaqSectionProps) {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-5 pb-5 text-body">{faq.answer}</p>
+                    <p className="font-urdu px-5 pb-5 text-body">{faq.answer}</p>
                   </div>
                 </div>
               </div>

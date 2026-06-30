@@ -1,6 +1,6 @@
 import ProductGallery from "@/components/product/ProductGallery";
 import OrderForm from "@/components/product/OrderForm";
-import { IconStar, IconCheck, IconShieldCheck, IconTruck, IconLeaf, IconBag } from "@/components/icons";
+import { IconStar, IconCheck, IconShieldCheck, IconTruck, IconLeaf } from "@/components/icons";
 import type { Product } from "@/lib/types";
 
 interface HeroSectionProps {
@@ -38,20 +38,20 @@ export default function HeroSection({ product }: HeroSectionProps) {
               </span>
             </div>
 
-            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+            <h1
+              dir="rtl"
+              lang="ur"
+              className="font-urdu mt-3 text-3xl font-bold text-ink sm:text-4xl"
+            >
               {product.name}
             </h1>
-            {product.nameUrdu ? (
-              <p dir="rtl" lang="ur" className="font-urdu mt-1 text-2xl leading-relaxed text-ink">
-                {product.nameUrdu}
-              </p>
-            ) : null}
-            <p className="mt-2 text-lg text-brand-dark">{product.tagline}</p>
-            {product.taglineUrdu ? (
-              <p dir="rtl" lang="ur" className="font-urdu mt-1 text-lg leading-loose text-brand-dark">
-                {product.taglineUrdu}
-              </p>
-            ) : null}
+            <p
+              dir="rtl"
+              lang="ur"
+              className="font-urdu mt-2 text-xl font-semibold text-brand-dark"
+            >
+              {product.tagline}
+            </p>
 
             {/* Mobile-only quick CTA — jumps to the order form below. Hidden on
                 desktop, where the order form sits in the right column. */}
@@ -59,11 +59,12 @@ export default function HeroSection({ product }: HeroSectionProps) {
               href="#order"
               className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-base font-bold text-white shadow-sm transition-colors hover:bg-brand-dark lg:hidden"
             >
-              <IconBag size={20} />
               Order Now
             </a>
 
-            <p className="mt-5 max-w-prose text-body lg:mt-4">{product.description}</p>
+            <p dir="rtl" lang="ur" className="font-urdu mt-5 max-w-prose text-body lg:mt-4">
+              {product.description}
+            </p>
 
             <ul className="mt-5 grid gap-2 sm:grid-cols-2">
               {product.highlights.map((h) => (

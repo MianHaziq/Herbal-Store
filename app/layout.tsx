@@ -8,17 +8,19 @@ import { getDefaultProduct } from "@/data/products";
 
 import "./globals.css";
 
+// English UI font for the whole site chrome.
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
 });
 
-// Urdu (Nastaliq) script font, used for the Urdu name/tagline.
+// Urdu (Nastaliq) script — used for the Urdu content blocks: the title,
+// description, benefits, FAQ, testimonials and the order-form field labels.
 const notoUrdu = Noto_Nastaliq_Urdu({
   variable: "--font-noto-urdu",
   subsets: ["arabic"],
-  weight: ["400", "600"],
+  weight: ["400", "600", "700"],
   display: "swap",
 });
 
@@ -31,13 +33,27 @@ export const metadata: Metadata = {
     template: `%s | ${site.brand}`,
   },
   description: product.tagline,
-  keywords: [product.name, site.brand, "natural relief oil", "herbal skin care"],
+  keywords: [
+    product.name,
+    site.brand,
+    "خارش کا تیل",
+    "چنبل کا علاج",
+    "سورائسز",
+    "اسکن الرجی",
+    "herbal skin oil",
+  ],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: `${product.name} — ${site.brand}`,
     description: product.tagline,
     type: "website",
     url: site.url,
     siteName: site.brand,
+    locale: "ur_PK",
   },
   twitter: {
     card: "summary_large_image",
@@ -51,7 +67,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${notoUrdu.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${jakarta.variable} ${notoUrdu.variable} h-full`}
+    >
       <body className="min-h-full flex flex-col bg-paper text-body">
         <Navbar />
         <main className="flex-1">{children}</main>

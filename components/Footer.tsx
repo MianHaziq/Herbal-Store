@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { site } from "@/lib/site";
-import { IconLeaf, IconWhatsApp, IconShieldCheck, IconTruck } from "@/components/icons";
+import { IconWhatsApp, IconShieldCheck, IconTruck } from "@/components/icons";
 
 const TRUST = [
   { icon: <IconShieldCheck size={18} />, label: "100% Authentic" },
@@ -17,16 +18,19 @@ export default function Footer() {
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">
             <Link href="/" className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint text-brand">
-                <IconLeaf size={20} />
-              </span>
-              <span className="text-lg font-extrabold tracking-tight text-ink">
+              <Image
+                src="/herbal_logoo.png"
+                alt={site.brand}
+                width={40}
+                height={40}
+                className="h-10 w-10"
+              />
+              <span className="text-xl font-extrabold tracking-tight text-ink">
                 {site.brand}
               </span>
             </Link>
             <p className="mt-3 text-sm text-body">
-              {site.tagline}. Natural, dermatologist-reviewed care delivered to
-              your door.
+              {site.tagline}. Natural, herbal care delivered to your door.
             </p>
           </div>
 
@@ -51,7 +55,13 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-line pt-6">
-          <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Legal">
+          <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer">
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-body transition-colors hover:text-brand"
+            >
+              Contact Us
+            </Link>
             <Link
               href="/privacy-policy"
               className="text-sm font-medium text-body transition-colors hover:text-brand"
@@ -67,9 +77,7 @@ export default function Footer() {
           </nav>
 
           <div className="mt-5 flex flex-col gap-2 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              © {/* update yearly */}2026 {site.brand}. All rights reserved.
-            </p>
+            <p>© {/* update yearly */}2026 {site.brand}. All rights reserved.</p>
             <p>
               These statements are for general wellness. Consult a doctor for
               medical conditions.
