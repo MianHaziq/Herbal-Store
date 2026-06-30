@@ -20,6 +20,7 @@ export interface ReceiptOrder {
   name: string;
   phone: string;
   address: string;
+  city: string;
 }
 
 interface OrderReceiptProps {
@@ -34,19 +35,25 @@ interface OrderReceiptProps {
 
 const money = (n: number) => `${site.currency} ${n.toLocaleString()}`;
 
-/** Customer-facing status line based on the background delivery result. */
-function deliveryCopy(delivery: DeliveryResult | null): { text: string; tone: "pending" | "ok" | "warn" } {
+/** Customer-facing status (title + line) based on the background delivery result. */
+function deliveryCopy(delivery: DeliveryResult | null): { title: string; text: string; tone: "pending" | "ok" | "warn" } {
   switch (delivery) {
     case "sent":
       return {
+        title: "Order placed successfully",
         text: "Your order is confirmed. Our team will arrange delivery and you simply pay cash when it arrives — nothing else to do.",
         tone: "ok",
       };
     case null:
-      return { text: "Placing your order…", tone: "pending" };
+      return {
+        title: "Saving your order…",
+        text: "Please wait a moment while we save your order.",
+        tone: "pending",
+      };
     default: // "failed" | "unconfigured"
       return {
-        text: "We couldn't save your order automatically. Please tap below to send it to us on WhatsApp so we can process it.",
+        title: "Couldn't save your order",
+        text: "There was an error on the website, so your order wasn't saved. Please send it to us on WhatsApp using the button below — we'll process it right away.",
         tone: "warn",
       };
   }
@@ -64,40 +71,58 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
 
   return (
     <div className="animate-pop rounded-3xl border border-line bg-paper p-5 shadow-sm sm:p-8">
-      {/* Success header with an animated, drawn-on checkmark */}
+      {/* State-aware header icon: spinner while saving, checkmark on success,
+          warning on error. */}
       <div className="flex flex-col items-center text-center">
-        <span className="animate-check relative flex h-20 w-20 items-center justify-center">
-          <span className="absolute inset-0 rounded-full bg-mint" aria-hidden="true" />
-          <span
-            className="animate-ring absolute inset-2 rounded-full bg-brand-light"
-            aria-hidden="true"
-          />
-          <svg viewBox="0 0 56 56" className="relative h-12 w-12 text-brand" aria-hidden="true">
-            <circle
-              className="success-ring"
-              cx="28"
-              cy="28"
-              r="25"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
+        {delivery === null ? (
+          // Saving — animated loading spinner.
+          <span className="flex h-20 w-20 items-center justify-center" role="status" aria-label="Saving your order">
+            <span className="h-12 w-12 animate-spin rounded-full border-4 border-mint border-t-brand" />
+          </span>
+        ) : needsWhatsApp ? (
+          // Error — warning triangle (recoverable via WhatsApp below).
+          <span className="animate-pop relative flex h-20 w-20 items-center justify-center" aria-hidden="true">
+            <span className="absolute inset-0 rounded-full bg-amber/15" />
+            <svg viewBox="0 0 24 24" className="relative h-10 w-10 text-amber" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+              <path d="M12 9v4M12 17h.01" />
+            </svg>
+          </span>
+        ) : (
+          // Success — animated, drawn-on checkmark.
+          <span className="animate-check relative flex h-20 w-20 items-center justify-center">
+            <span className="absolute inset-0 rounded-full bg-mint" aria-hidden="true" />
+            <span
+              className="animate-ring absolute inset-2 rounded-full bg-brand-light"
+              aria-hidden="true"
             />
-            <path
-              className="success-tick"
-              d="M17 29l7 7 15-16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
+            <svg viewBox="0 0 56 56" className="relative h-12 w-12 text-brand" aria-hidden="true">
+              <circle
+                className="success-ring"
+                cx="28"
+                cy="28"
+                r="25"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              />
+              <path
+                className="success-tick"
+                d="M17 29l7 7 15-16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        )}
         <h3
           className="animate-fade-up mt-4 text-xl font-bold text-ink"
           style={{ animationDelay: "0.15s" }}
         >
-          Order placed successfully
+          {status.title}
         </h3>
         <p
           className={`animate-fade-up mt-1 text-sm ${
@@ -126,7 +151,7 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
         <div className="mt-3 space-y-2 text-sm">
           <div className="flex items-start justify-between gap-3">
             <span className="text-ink">
-              {order.productName}
+              <span dir="rtl" lang="ur" className="font-urdu">{order.productName}</span>
               <span className="text-muted"> · {order.variantLabel}</span>
               <span className="block text-xs text-muted">
                 {money(order.unitPrice)} × {order.quantity}
@@ -165,7 +190,7 @@ export default function OrderReceipt({ order, whatsappUrl, delivery, onReset }: 
           </li>
           <li className="flex items-start gap-2.5 text-ink">
             <IconMapPin size={16} className="mt-0.5 shrink-0 text-muted" />
-            {order.address}
+            {order.address}, {order.city}
           </li>
         </ul>
       </div>

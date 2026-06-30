@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
-/* ── Design tokens — clean medical palette ───────────────────────── */
+/* ── Design tokens — herbal green palette (matches the leaf logo) ── */
 @theme {
-  /* Brand: calm medical teal/emerald = trust + health */
-  --color-brand: #0d9488;
-  --color-brand-dark: #0f766e;
-  --color-brand-light: #5eead4;
+  /* Brand: fresh herbal green = natural + trust */
+  --color-brand: #16a34a;
+  --color-brand-dark: #15803d;
+  --color-brand-light: #86efac;
 
   /* Surfaces */
-  --color-mint: #f0fdfa; /* soft tinted section background */
+  --color-mint: #f0fdf4; /* soft tinted section background */
   --color-paper: #ffffff; /* cards / page */
-  --color-cloud: #f8fafc; /* alternating section background */
+  --color-cloud: #f7faf8; /* alternating section background */
 
   /* Text — slate scale */
   --color-ink: #0f172a; /* headings */
@@ -23,6 +23,7 @@
   --color-sale: #e11d48; /* discount / sale price */
   --color-whatsapp: #25d366; /* WhatsApp brand green */
 
+  /* English UI font + Urdu (Nastaliq) for Urdu content blocks */
   --font-sans: var(--font-jakarta);
   --font-display: var(--font-jakarta);
   --font-urdu: var(--font-noto-urdu);
@@ -113,6 +114,28 @@ body {
   -webkit-font-smoothing: antialiased;
   /* Guard against any accidental horizontal scroll on small screens */
   overflow-x: hidden;
+}
+
+/* ── Urdu typography ─────────────────────────────────────────────── */
+/* Nastaliq (Urdu) needs generous line-height + vertical padding, otherwise
+   the script's tall/looping glyphs get clipped. Applied to every Urdu block. */
+.font-urdu {
+  font-family: var(--font-urdu);
+  line-height: 2;
+  padding-block: 0.12em;
+}
+
+/* Latin numerals/words sitting inside RTL Urdu text (prices, phone, ml)
+   should render left-to-right so they read correctly. */
+.ltr-nums {
+  unicode-bidi: isolate;
+  direction: ltr;
+}
+
+/* Urdu-script placeholders in form inputs (typed text keeps the UI font). */
+.urdu-ph::placeholder {
+  font-family: var(--font-urdu);
+  opacity: 0.7;
 }
 
 /* ── Utilities ───────────────────────────────────────────────────── */

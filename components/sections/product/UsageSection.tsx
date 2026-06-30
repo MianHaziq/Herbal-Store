@@ -10,18 +10,17 @@ interface UsageSectionProps {
 export default function UsageSection({ product }: UsageSectionProps) {
   return (
     <section id="usage" className="scroll-mt-24 border-t border-line">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-20">
+      <div dir="rtl" lang="ur" className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-20">
         {/* Steps */}
         <div>
-          <span className="text-sm font-semibold uppercase tracking-wide text-brand">
-            Simple to use
+          <span className="font-urdu text-base font-semibold text-brand">
+            استعمال میں آسان
           </span>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-            How to use
+          <h2 className="font-urdu mt-3 text-3xl font-bold text-ink sm:text-4xl">
+            طریقہ استعمال
           </h2>
-          <p className="mt-3 text-body">
-            Just a few drops, twice a day. Consistency is the key to lasting
-            results.
+          <p className="font-urdu mt-3 text-body">
+            دن میں دو بار صرف چند قطرے۔ بہترین نتائج کے لیے باقاعدگی ضروری ہے۔
           </p>
 
           <ol className="mt-8 space-y-5">
@@ -30,7 +29,7 @@ export default function UsageSection({ product }: UsageSectionProps) {
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
                   {i + 1}
                 </span>
-                <p className="pt-1 text-body">{step}</p>
+                <p className="font-urdu pt-1 text-body">{step}</p>
               </li>
             ))}
           </ol>
@@ -43,18 +42,19 @@ export default function UsageSection({ product }: UsageSectionProps) {
               src={(product.images[1] ?? product.images[0]).src}
               alt={(product.images[1] ?? product.images[0]).alt}
               fill
+              quality={90}
               sizes="(max-width: 1024px) 100vw, 400px"
               className="object-cover"
             />
           </div>
-          <h3 className="mt-6 text-center text-lg font-bold text-ink">
-            What&apos;s inside
+          <h3 className="font-urdu mt-6 text-center text-lg font-bold text-ink">
+            اس میں کیا شامل ہے
           </h3>
           <ul className="mt-4 flex flex-wrap justify-center gap-2">
             {product.ingredients.map((ing) => (
               <li
                 key={ing}
-                className="flex items-center gap-1.5 rounded-full border border-line bg-paper px-3 py-1.5 text-sm font-medium text-body"
+                className="font-urdu flex items-center gap-1.5 rounded-full border border-line bg-paper px-3 py-1.5 text-sm font-medium text-body"
               >
                 <IconLeaf size={14} className="text-brand" />
                 {ing}

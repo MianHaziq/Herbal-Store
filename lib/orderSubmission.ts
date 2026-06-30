@@ -26,6 +26,7 @@ export async function submitOrder(order: SubmittableOrder): Promise<DeliveryResu
     name: order.name,
     phone: order.phone,
     address: order.address,
+    city: order.city,
   };
 
   try {

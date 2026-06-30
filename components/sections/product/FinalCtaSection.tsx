@@ -11,24 +11,26 @@ export default function FinalCtaSection({ product }: FinalCtaSectionProps) {
 
   return (
     <section className="border-t border-line bg-brand">
-      <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-20">
-        <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-          Ready to feel the relief?
+      <div dir="rtl" lang="ur" className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-20">
+        <h2 className="font-urdu text-3xl font-bold text-white sm:text-4xl">
+          سکون کے لیے تیار ہیں؟
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-brand-light">
-          Start your {product.name} today from {site.currency}{" "}
-          {fromPrice.toLocaleString()}. Cash on delivery — pay only when it
-          arrives.
+        <p className="font-urdu mx-auto mt-3 max-w-xl text-brand-light">
+          {product.name} آج ہی منگوائیں، صرف{" "}
+          <span className="ltr-nums">
+            {site.currency} {fromPrice.toLocaleString()}
+          </span>{" "}
+          سے۔ کیش آن ڈیلیوری — ادائیگی صرف آرڈر ملنے پر۔
         </p>
         <a
           href="#order"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-base font-bold text-brand-dark shadow-lg transition-transform hover:-translate-y-0.5"
+          className="font-urdu mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-base font-bold text-brand-dark shadow-lg transition-transform hover:-translate-y-0.5"
         >
-          Order now
-          <IconArrowRight size={20} />
+          ابھی آرڈر کریں
+          <IconArrowRight size={20} className="rotate-180" />
         </a>
-        <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-brand-light">
-          <IconShieldCheck size={16} /> 100% natural · no side effects · trusted by thousands
+        <p className="font-urdu mt-4 flex items-center justify-center gap-1.5 text-sm text-brand-light">
+          <IconShieldCheck size={16} /> 100% قدرتی · کوئی سائیڈ ایفیکٹ نہیں · ہزاروں کا اعتماد
         </p>
       </div>
     </section>

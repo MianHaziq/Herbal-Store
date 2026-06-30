@@ -7,17 +7,16 @@ interface BenefitsSectionProps {
 export default function BenefitsSection({ product }: BenefitsSectionProps) {
   return (
     <section id="benefits" className="scroll-mt-24 border-t border-line bg-mint">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+      <div dir="rtl" lang="ur" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wide text-brand">
-            Why people love it
+          <span className="font-urdu text-base font-semibold text-brand">
+            لوگ اسے کیوں پسند کرتے ہیں
           </span>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-            Real relief, the natural way
+          <h2 className="font-urdu mt-3 text-3xl font-bold text-ink sm:text-4xl">
+            قدرتی طریقے سے حقیقی سکون
           </h2>
-          <p className="mt-3 text-body">
-            Every bottle is made to soothe, protect, and restore — without the
-            harsh chemicals.
+          <p className="font-urdu mt-3 text-body">
+            ہر بوتل جلد کو سکون دینے، محفوظ رکھنے اور بحال کرنے کے لیے بنائی گئی ہے — سخت کیمیکلز کے بغیر۔
           </p>
         </div>
 
@@ -30,8 +29,8 @@ export default function BenefitsSection({ product }: BenefitsSectionProps) {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-mint">
                 {b.icon}
               </div>
-              <h3 className="mt-4 text-lg font-bold text-ink">{b.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">{b.description}</p>
+              <h3 className="font-urdu mt-4 text-lg font-bold text-ink">{b.title}</h3>
+              <p className="font-urdu mt-2 text-sm text-body">{b.description}</p>
             </div>
           ))}
         </div>

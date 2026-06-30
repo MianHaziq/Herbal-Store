@@ -6,7 +6,7 @@ interface TrustSectionProps {
 }
 
 const GUARANTEES = [
-  { icon: <IconShieldCheck size={22} />, title: "Quality assured", text: "Lab-tested, dermatologist-reviewed formula." },
+  { icon: <IconShieldCheck size={22} />, title: "Quality assured", text: "Pure, carefully prepared herbal formula." },
   { icon: <IconTruck size={22} />, title: "Fast delivery", text: "Dispatched in 24–48h with cash on delivery." },
   { icon: <IconLeaf size={22} />, title: "Natural & safe", text: "No steroids, parabens, or artificial fragrance." },
 ];
@@ -53,14 +53,16 @@ export default function TrustSection({ product }: TrustSectionProps) {
                   <IconStar key={i} size={16} className={i < t.rating ? "text-amber" : "text-line"} />
                 ))}
               </span>
-              <blockquote className="mt-3 flex-1 text-body">“{t.quote}”</blockquote>
+              <blockquote dir="rtl" lang="ur" className="font-urdu mt-3 flex-1 text-body">
+                {t.quote}
+              </blockquote>
               <figcaption className="mt-4 flex items-center gap-3 border-t border-line pt-4">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-mint text-brand">
                   <IconUser size={18} />
                 </span>
-                <span className="text-sm">
-                  <span className="block font-bold text-ink">{t.name}</span>
-                  <span className="text-muted">{t.location}</span>
+                <span className="text-sm" dir="rtl" lang="ur">
+                  <span className="font-urdu block font-bold text-ink">{t.name}</span>
+                  <span className="font-urdu text-muted">{t.location}</span>
                 </span>
               </figcaption>
             </figure>

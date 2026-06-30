@@ -33,9 +33,9 @@ export default function StickyOrderBar({ product }: StickyOrderBarProps) {
     >
       <div className="flex items-center justify-between gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div>
-          <p className="text-xs text-muted">{product.name}</p>
+          <p dir="rtl" lang="ur" className="font-urdu text-xs text-muted">{product.name}</p>
           <p className="font-bold text-ink">
-            From {site.currency} {fromPrice.toLocaleString()}
+            {site.currency} {fromPrice.toLocaleString()}
           </p>
         </div>
         <a

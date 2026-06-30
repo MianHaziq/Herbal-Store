@@ -8,78 +8,115 @@ export const metadata: Metadata = {
   description: `How ${site.brand} collects, uses, and protects the information you share when placing an order.`,
 };
 
-const LAST_UPDATED = "June 12, 2026";
+const LAST_UPDATED = "July 1, 2026";
 
 const sections: LegalSection[] = [
   {
-    heading: "1. Information we collect",
+    heading: "1. Introduction",
     paragraphs: [
-      `When you place an order with ${site.brand}, you provide details directly through our order form and WhatsApp. We only collect what we need to process and deliver your order.`,
-    ],
-    bullets: [
-      "Your name",
-      "Phone number",
-      "Delivery address",
-      "Order details (product, size, quantity)",
-      "Any messages you send us on WhatsApp",
+      `This Privacy Policy describes how ${site.brand} ("we", "us", or "our") collects, uses, stores, and protects your personal information when you visit our website, place an order, or contact us. By using our website or placing an order, you consent to the practices described in this policy.`,
+      "We are committed to protecting your privacy and only collect information that is necessary to process and deliver your orders and to provide customer support.",
     ],
   },
   {
-    heading: "2. How we use your information",
+    heading: "2. Information we collect",
+    paragraphs: [
+      "When you place an order or get in touch with us, you provide information directly through our order form, on WhatsApp, by phone, or by email. We collect:",
+    ],
+    bullets: [
+      "Your full name",
+      "Phone number",
+      "Delivery address and city",
+      "Order details (product, size, quantity, order number, and date)",
+      "Any messages or information you share with us when you contact us",
+    ],
+  },
+  {
+    heading: "3. How we collect information",
+    paragraphs: [
+      "We collect information in the following ways:",
+    ],
+    bullets: [
+      "Directly from you when you submit the order form or message us",
+      "Automatically, in a limited way, such as basic technical data your browser sends (e.g. device type) when loading the page",
+    ],
+  },
+  {
+    heading: "4. How we use your information",
     paragraphs: ["We use the information you provide to:"],
     bullets: [
       "Confirm, prepare, and deliver your order",
       "Contact you about your order via WhatsApp, phone, or SMS",
-      "Provide customer support and handle returns or complaints",
-      "Improve our products and service",
+      "Provide customer support and handle returns, replacements, or complaints",
+      "Keep a record of orders for accounting and after-sales service",
+      "Improve our products, website, and overall service",
     ],
   },
   {
-    heading: "3. How orders are processed",
+    heading: "5. How your order is processed and stored",
     paragraphs: [
-      `Our website does not store your information in a database. When you submit the order form, your details are sent as a WhatsApp message to our team, and the conversation takes place inside WhatsApp. WhatsApp's own handling of your data is governed by its privacy policy.`,
+      "When you submit the order form, your order details are sent securely to our own server, which records the order in a private Google Sheet that only our team can access. We may also receive your order as a WhatsApp message so our team can confirm it with you.",
+      "We do not run a public customer database on this website, and your payment is handled in cash at delivery — we never collect card or bank details on this site.",
     ],
   },
   {
-    heading: "4. Sharing your information",
+    heading: "6. Sharing your information",
     paragraphs: [
-      "We do not sell or rent your personal information. We only share it where necessary to fulfil your order — for example, with the courier or delivery partner that brings your package to you.",
+      "We do not sell or rent your personal information. We only share it where necessary to fulfil your order or operate our service, including with:",
+    ],
+    bullets: [
+      "Courier and delivery partners, to deliver your package and collect cash on delivery",
+      "Google (Google Sheets / Apps Script), which stores your order record on our behalf as a data processor",
+      "WhatsApp / Meta, when you choose to message us, governed by their own privacy policy",
+      "Authorities or advisors where we are legally required to do so",
     ],
   },
   {
-    heading: "5. Data retention",
+    heading: "7. Cookies and analytics",
     paragraphs: [
-      "Because we operate on a cash-on-delivery, WhatsApp-based model, your order details remain in our WhatsApp chat history. You may ask us to delete your conversation and details at any time.",
+      "Our website is a lightweight, mostly static page and does not set advertising cookies. If we add analytics in the future to understand visits, it will be used only in aggregate and never to personally identify you.",
     ],
   },
   {
-    heading: "6. Cookies and analytics",
+    heading: "8. Data retention",
     paragraphs: [
-      "Our website is a static page and does not set advertising cookies. If we add analytics in the future to understand visits, it will be used only in aggregate and never to identify you personally.",
+      "We keep your order details only for as long as needed to fulfil your order, provide after-sales support, and meet our record-keeping obligations. You may ask us to delete your information at any time, subject to any records we are required to keep.",
     ],
   },
   {
-    heading: "7. Your rights",
+    heading: "9. Data security",
     paragraphs: [
-      "You may request access to, correction of, or deletion of the personal information you have shared with us. To do so, contact us using the details below.",
+      "We take reasonable technical and organisational measures to protect your information against loss, misuse, and unauthorised access. Order data is transmitted over an encrypted (HTTPS) connection. However, no method of transmission or storage is completely secure, and we cannot guarantee absolute security.",
     ],
   },
   {
-    heading: "8. Children's privacy",
+    heading: "10. Your rights",
     paragraphs: [
-      "Our products and store are intended for adults. We do not knowingly collect information from children. Orders should be placed by an adult.",
+      "You may request access to, correction of, or deletion of the personal information you have shared with us. You may also ask us to stop contacting you for marketing purposes. To exercise any of these rights, contact us using the details below.",
     ],
   },
   {
-    heading: "9. Changes to this policy",
+    heading: "11. Children's privacy",
     paragraphs: [
-      "We may update this Privacy Policy from time to time. Any changes will be posted on this page with a new \"last updated\" date.",
+      "Our products and store are intended for adults. We do not knowingly collect information from children. Orders should be placed by an adult (18 years or older).",
     ],
   },
   {
-    heading: "10. Contact us",
+    heading: "12. Third-party links",
     paragraphs: [
-      `If you have any questions about this Privacy Policy or your information, contact us on WhatsApp at +${site.whatsappNumber} or by email at ${site.supportEmail}.`,
+      "Our website or messages may contain links to third-party sites or services (such as WhatsApp). We are not responsible for the privacy practices or content of those third parties; please review their policies separately.",
+    ],
+  },
+  {
+    heading: "13. Changes to this policy",
+    paragraphs: [
+      "We may update this Privacy Policy from time to time. Any changes will be posted on this page with a new \"last updated\" date. Your continued use of our website after changes are posted means you accept the updated policy.",
+    ],
+  },
+  {
+    heading: "14. Contact us",
+    paragraphs: [
+      `If you have any questions about this Privacy Policy or your information, contact us on WhatsApp at +${site.whatsappNumber}, by phone at ${site.supportPhone}, or by email at ${site.supportEmail}.`,
     ],
   },
 ];

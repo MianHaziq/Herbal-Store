@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { site } from "@/lib/site";
-import { IconLeaf, IconTruck } from "@/components/icons";
+import { IconTruck } from "@/components/icons";
 
 const LINKS = [
   { label: "Benefits", href: "#benefits" },
@@ -22,17 +23,22 @@ export default function Navbar() {
       <div className="bg-brand text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-xs font-medium sm:text-sm">
           <IconTruck size={16} />
-          Free delivery & Cash on Delivery available across the country
+          Free Home Delivery
         </div>
       </div>
 
       <nav className="border-b border-line bg-paper/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-mint text-brand">
-              <IconLeaf size={20} />
-            </span>
-            <span className="text-lg font-extrabold tracking-tight text-ink">
+            <Image
+              src="/herbal_logoo.png"
+              alt={site.brand}
+              width={40}
+              height={40}
+              priority
+              className="h-10 w-10"
+            />
+            <span className="text-xl font-extrabold tracking-tight text-ink">
               {site.brand}
             </span>
           </Link>

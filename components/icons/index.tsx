@@ -95,6 +95,29 @@ export const IconUser = (p: IconProps) => (
   </Base>
 );
 
+export const IconBuilding = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" />
+    <path d="M14 9h5a1 1 0 0 1 1 1v11" />
+    <path d="M3 21h18" />
+    <path d="M7.5 8h3M7.5 12h3M7.5 16h3" />
+  </Base>
+);
+
+export const IconMail = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m4 7 8 6 8-6" />
+  </Base>
+);
+
+export const IconClock = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </Base>
+);
+
 export const IconChevronDown = (p: IconProps) => (
   <Base {...p}>
     <path d="m6 9 6 6 6-6" />
